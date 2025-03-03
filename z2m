@@ -4,8 +4,9 @@ echo "Setting Up Your Hub W/ Zigbee2MQTT - Ver 1.0"
 echo "----------------------------------------------------------------"
 echo " "
 # Node setup
-sudo curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs git make g++ gcc
+sudo curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs git make g++ gcc libsystemd-dev
+npm install -g pnpm
 echo ">>>>> Node Installed <<<<<"
 # Z2M setup
 echo ">>>>> Clone Zigbee2MQTT repository <<<<<"
@@ -14,6 +15,8 @@ sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
 echo " "
 echo ">>>>> Install dependencies <<<<<"
 cd /opt/zigbee2mqtt
+pnpm i --frozen-lockfile
+pnpm run build
 git fetch
 git checkout master
 git pull
@@ -35,7 +38,7 @@ mqtt:
   # MQTT base topic for Zigbee2MQTT MQTT messages
   base_topic: zigbee2mqtt
   # MQTT server URL
-  server: 'mqtt://192.168.8.169:1883'
+  server: 'mqtt://192.168.31.175:1883'
   # MQTT server authentication, uncomment if required:
   # user: mqtt
   # password: mqtt
@@ -49,7 +52,7 @@ frontend:
   # Optional, default 8080 or you can use your own as well.
   port: 8080
   # IP address of the device running Zigbee2MQTT
-  host: 192.168.8.169
+  host: 192.168.31.175
 advanced:
   log_level: debug
   network_key: GENERATE
